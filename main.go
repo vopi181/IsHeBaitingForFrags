@@ -33,16 +33,16 @@ func isBaitingFile(fd string, id int64, topBaiters bool) {
 	tb = make(map[int64]*baitStruct)
 
 	p.RegisterEventHandler(func(e events.MatchStart) {
-		fmt.Println("======PLAYERS======")
 		for _, ply := range p.GameState().Participants().All() {
-			if topBaiters {
-				tb[int64(ply.SteamID64)] = &baitStruct{name: ply.Name, totalBaits: 0}
-				fmt.Printf("[%v] %v\n", ply.SteamID64, tb[int64(ply.SteamID64)].name)
-			} else {
-				fmt.Printf("[%v] %v\n", ply.SteamID64, ply.Name)
+			if ply.SteamID64 != 0 {
+				if topBaiters {
+					tb[int64(ply.SteamID64)] = &baitStruct{name: ply.Name, totalBaits: 0}
+					fmt.Printf("[%v] %v\n", ply.SteamID64, tb[int64(ply.SteamID64)].name)
+				} else {
+					fmt.Printf("[%v] %v\n", ply.SteamID64, ply.Name)
+				}
 			}
 		}
-		fmt.Println("===================")
 	})
 
 	p.RegisterEventHandler(func(e events.Kill) {
@@ -52,12 +52,16 @@ func isBaitingFile(fd string, id int64, topBaiters bool) {
 				pname = e.Victim.Name
 				// Calculate people alive on team
 				aliveteam := 0
+
 				for _, tm := range e.Victim.TeamState.Members() {
 					if tm.LastAlivePosition != tm.Position() {
 						aliveteam = aliveteam + 1
 
+					} else {
+
 					}
 				}
+
 				if aliveteam == 1 {
 					// println("Potential Baiter: " + e.Victim.Name + " at " + fmt.Sprint(p.GameState().TotalRoundsPlayed()))
 					totalBaits = totalBaits + 1
@@ -81,6 +85,7 @@ func isBaitingFile(fd string, id int64, topBaiters bool) {
 			fmt.Println("=====================")
 		} else {
 			fmt.Println("======BAIT CALC======")
+			fmt.Println("MAP: " + p.Header().MapName)
 			w := new(tabwriter.Writer)
 			w.Init(os.Stdout, 30, 1, 0, '-', tabwriter.Debug)
 			fmt.Fprint(w, "name\tid\tpercent of rounds baited\n")
