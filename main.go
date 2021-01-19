@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"text/tabwriter"
 
 	dem "github.com/markus-wa/demoinfocs-golang/v2/pkg/demoinfocs"
 	events "github.com/markus-wa/demoinfocs-golang/v2/pkg/demoinfocs/events"
@@ -80,11 +81,16 @@ func isBaitingFile(fd string, id int64, topBaiters bool) {
 			fmt.Println("=====================")
 		} else {
 			fmt.Println("======BAIT CALC======")
+			w := new(tabwriter.Writer)
+			w.Init(os.Stdout, 30, 8, 0, '\t', tabwriter.AlignRight|tabwriter.Debug)
+			fmt.Fprint(w, "id\tname\tpercent of rounds baited\n")
 			for _, ply := range p.GameState().Participants().All() {
 				roundsPlayed := float32(p.GameState().TotalRoundsPlayed())
 				fTotalBaits := float32(tb[int64(ply.SteamID64)].totalBaits)
-				fmt.Printf("Player: %v(%v) ", ply.Name, ply.SteamID64)
-				fmt.Printf("Baited %v/%v = %v percent of rounds\n", tb[int64(ply.SteamID64)].totalBaits, p.GameState().TotalRoundsPlayed(), (fTotalBaits/roundsPlayed)*100)
+				fmt.Fprintf(w, "%v\t%v\t%v\n", ply.Name, ply.SteamID64, (fTotalBaits/roundsPlayed)*100)
+				// fmt.Printf("Player: %v(%v) ", ply.Name, ply.SteamID64)
+				// fmt.Printf("Baited %v/%v = %v percent of rounds\n", tb[int64(ply.SteamID64)].totalBaits, p.GameState().TotalRoundsPlayed(), (fTotalBaits/roundsPlayed)*100)
+				w.Flush()
 			}
 			fmt.Println("=====================")
 
