@@ -59,7 +59,7 @@ func isBaitingFile(fd string, id int64, topBaiters bool) {
 					}
 				}
 				if aliveteam == 1 {
-					println("Potential Baiter: " + e.Victim.Name + " at " + fmt.Sprint(p.GameState().TotalRoundsPlayed()))
+					// println("Potential Baiter: " + e.Victim.Name + " at " + fmt.Sprint(p.GameState().TotalRoundsPlayed()))
 					totalBaits = totalBaits + 1
 					if topBaiters {
 						tb[int64(e.Victim.SteamID64)].totalBaits = (tb[int64(e.Victim.SteamID64)].totalBaits) + 1
