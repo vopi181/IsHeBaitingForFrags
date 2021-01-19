@@ -1,6 +1,8 @@
+# Is He Baiting For Frags? - The Age Old Question
+(How many rounds in a demo file was a player last alive)
 # How to
 ```
-Is He Baiting For Frags? - The Age Old Question
+
 Usage of IsHeBaitingForFrags.exe:
   -demofile string
         The demo file to parse (default "test.dem")
