@@ -82,7 +82,7 @@ func isBaitingFile(fd string, id int64, topBaiters bool) {
 		} else {
 			fmt.Println("======BAIT CALC======")
 			w := new(tabwriter.Writer)
-			w.Init(os.Stdout, 30, 8, 0, '-', tabwriter.Debug)
+			w.Init(os.Stdout, 30, 1, 0, '-', tabwriter.Debug)
 			fmt.Fprint(w, "name\tid\tpercent of rounds baited\n")
 			for _, ply := range p.GameState().Participants().All() {
 				if ply.SteamID64 != 0 {
