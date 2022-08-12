@@ -40,3 +40,4 @@ Baited 2/16 = 12.5 percent of rounds
 
 # Tech
 Go
+CSGO
