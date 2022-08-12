@@ -37,3 +37,6 @@ Player: shlocker(76561198128945703) on de_nuke
 Baited 2/16 = 12.5 percent of rounds
 =====================
 ```
+
+# Tech
+Go
